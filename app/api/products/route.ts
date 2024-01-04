@@ -27,3 +27,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Post Error', error }, { status: 500 })
   }
 }
+
+export async function GET(response: NextResponse) {
+  const products = await prisma.product.findMany({})
+  const totalProducts = products.length
+  return NextResponse.json(
+    {
+      products: products,
+      totalProducts: totalProducts,
+    },
+    { status: 200 }
+  )
+}

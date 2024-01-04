@@ -4,7 +4,7 @@ import prisma from '@/prisma/client'
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  const { title, slug, description } = body
+  const { title, description, price, stock, imageUrl } = body
 
   const validation = productSchema.safeParse(body)
 
@@ -16,8 +16,10 @@ export async function POST(request: NextRequest) {
     const newProduct = await prisma.product.create({
       data: {
         title,
-        slug,
         description,
+        price,
+        stock,
+        imageUrl,
       },
     })
     return NextResponse.json(newProduct, { status: 200 })
